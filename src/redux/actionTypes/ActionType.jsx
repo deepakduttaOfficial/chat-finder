@@ -1,0 +1,7 @@
+const ActionType = {
+  REGISTER_START: "REGISTER_START",
+  REGISTER_FAIL: "REGISTER_FAIL",
+  REGISTER_SUCCESS: "REGISTER_SUCCESS",
+};
+
+export default ActionType;

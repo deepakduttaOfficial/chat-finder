@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   chakra,
@@ -13,8 +13,12 @@ import {
   InputGroup,
   InputRightElement,
   Text,
+  Toast,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
+// React-readux
+import { useDispatch, useSelector } from "react-redux";
 
 // Google icon
 import { FcGoogle } from "react-icons/fc";
@@ -28,10 +32,17 @@ import {
   headingStyle,
   signupButtonStyle,
 } from "./style";
+import { registerUser } from "../../redux/action/authAction";
+import { auth } from "../../config/firebase";
+import { signOut } from "firebase/auth";
+
+// Fire base
 
 const Signup = () => {
+  // Toast to show the error or success
+  const toast = useToast();
+  // Local state
   const [isPassword, setIsPassword] = useState(true);
-
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -39,6 +50,10 @@ const Signup = () => {
   });
   // Extract the value
   const { name, email, password } = values;
+
+  // React-readux
+  const dispatch = useDispatch();
+  const { success, error, loading } = useSelector((state) => state.AUTH);
 
   // Change the input value
   const handleChange = (name) => (e) => {
@@ -48,9 +63,22 @@ const Signup = () => {
   // Hanlde email and password athentication
   const handleSignup = (e) => {
     e.preventDefault();
+    dispatch(registerUser({ name, email, password }));
   };
 
-  // Handle google authentication
+  // Fire base stuff
+
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: error,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
+    }
+  }, [error]);
 
   return (
     <Container {...containerStyle}>
@@ -104,7 +132,7 @@ const Signup = () => {
             </FormControl>
           </VStack>
           {/* Sign up button */}
-          <Button {...signupButtonStyle} type="submit">
+          <Button {...signupButtonStyle} type="submit" isLoading={loading}>
             Signup
           </Button>
         </chakra.form>
