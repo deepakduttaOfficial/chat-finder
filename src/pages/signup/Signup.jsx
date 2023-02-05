@@ -5,6 +5,7 @@ import {
   Container,
   Divider,
   FormControl,
+  FormHelperText,
   FormLabel,
   Heading,
   HStack,
@@ -13,7 +14,6 @@ import {
   InputGroup,
   InputRightElement,
   Text,
-  Toast,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -53,7 +53,9 @@ const Signup = () => {
 
   // React-readux
   const dispatch = useDispatch();
-  const { success, error, loading } = useSelector((state) => state.AUTH);
+  const { success, error, loading, currentUser } = useSelector(
+    (state) => state.AUTH
+  );
 
   // Change the input value
   const handleChange = (name) => (e) => {
@@ -66,8 +68,7 @@ const Signup = () => {
     dispatch(registerUser({ name, email, password }));
   };
 
-  // Fire base stuff
-
+  // handle The response to update the UI error/success
   useEffect(() => {
     if (error) {
       toast({
@@ -78,8 +79,23 @@ const Signup = () => {
         position: "top-right",
       });
     }
-  }, [error]);
+    if (success) {
+      toast({
+        title: "Account created.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
+    }
+  }, [error, success]);
 
+  // Small validator
+  const validator =
+    name.length === 0 ||
+    !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) ||
+    password.length < 6;
+  console.log(currentUser);
   return (
     <Container {...containerStyle}>
       <Heading {...headingStyle}>Message app</Heading>
@@ -129,10 +145,16 @@ const Signup = () => {
                   onChange={handleChange("password")}
                 />
               </InputGroup>
+              <FormHelperText>Password must be 6 charecter long</FormHelperText>
             </FormControl>
           </VStack>
           {/* Sign up button */}
-          <Button {...signupButtonStyle} type="submit" isLoading={loading}>
+          <Button
+            {...signupButtonStyle}
+            type="submit"
+            isLoading={loading}
+            isDisabled={validator}
+          >
             Signup
           </Button>
         </chakra.form>
