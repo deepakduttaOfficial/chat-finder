@@ -20,7 +20,10 @@ import {
 // React-readux
 import { useDispatch, useSelector } from "react-redux";
 
-// Google icon
+// React router dom
+import { Navigate } from "react-router-dom";
+
+//  icons
 import { FcGoogle } from "react-icons/fc";
 import { BiShowAlt, BiHide } from "react-icons/bi";
 
@@ -32,8 +35,12 @@ import {
   headingStyle,
   signupButtonStyle,
 } from "./style";
-import { registerUser } from "../../redux/action/authAction";
-import { Navigate } from "react-router-dom";
+
+// All action
+import {
+  registerUser,
+  registerUserWithGoogle,
+} from "../../redux/action/authAction";
 
 const Signup = () => {
   // Toast to show the error or success
@@ -63,6 +70,16 @@ const Signup = () => {
   const handleSignup = (e) => {
     e.preventDefault();
     dispatch(registerUser({ name, email, password }));
+    setIsPassword({
+      name: "",
+      email: "",
+      password: "",
+    });
+  };
+
+  // Google Signup
+  const googleSignup = () => {
+    dispatch(registerUserWithGoogle());
   };
 
   // handle The response to update the UI error/success
@@ -87,6 +104,7 @@ const Signup = () => {
   if (currentUser) {
     return <Navigate to={"/chart"} />;
   }
+
   return (
     <Container {...containerStyle}>
       <Heading {...headingStyle}>Message app</Heading>
@@ -158,7 +176,14 @@ const Signup = () => {
         </HStack>
         <VStack w="full">
           {/* Google */}
-          <Button w={"full"} variant={"outline"} leftIcon={<FcGoogle />}>
+          <Button
+            w={"full"}
+            variant={"outline"}
+            leftIcon={<FcGoogle />}
+            onClick={googleSignup}
+            isLoading={loading}
+            loadingText={"Loding..."}
+          >
             Sign up with Google
           </Button>
         </VStack>
