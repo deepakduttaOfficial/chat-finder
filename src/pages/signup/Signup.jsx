@@ -33,14 +33,12 @@ import {
   signupButtonStyle,
 } from "./style";
 import { registerUser } from "../../redux/action/authAction";
-import { auth } from "../../config/firebase";
-import { signOut } from "firebase/auth";
-
-// Fire base
+import { Navigate } from "react-router-dom";
 
 const Signup = () => {
   // Toast to show the error or success
   const toast = useToast();
+
   // Local state
   const [isPassword, setIsPassword] = useState(true);
   const [values, setValues] = useState({
@@ -48,14 +46,13 @@ const Signup = () => {
     email: "",
     password: "",
   });
+
   // Extract the value
   const { name, email, password } = values;
 
   // React-readux
   const dispatch = useDispatch();
-  const { success, error, loading, currentUser } = useSelector(
-    (state) => state.AUTH
-  );
+  const { error, loading, currentUser } = useSelector((state) => state.AUTH);
 
   // Change the input value
   const handleChange = (name) => (e) => {
@@ -79,23 +76,17 @@ const Signup = () => {
         position: "top-right",
       });
     }
-    if (success) {
-      toast({
-        title: "Account created.",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-        position: "top-right",
-      });
-    }
-  }, [error, success]);
+  }, [error]);
 
   // Small validator
   const validator =
     name.length === 0 ||
     !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) ||
     password.length < 6;
-  console.log(currentUser);
+
+  if (currentUser) {
+    return <Navigate to={"/chart"} />;
+  }
   return (
     <Container {...containerStyle}>
       <Heading {...headingStyle}>Message app</Heading>

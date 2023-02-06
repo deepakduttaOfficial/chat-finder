@@ -2,6 +2,8 @@ const ActionType = {
   REGISTER_START: "REGISTER_START",
   REGISTER_FAIL: "REGISTER_FAIL",
   REGISTER_SUCCESS: "REGISTER_SUCCESS",
+
+  SET_USER: "SET_USER",
 };
 
 export default ActionType;

@@ -27,6 +27,14 @@ export default (state = initialState, action) => {
         success: false,
       };
 
+    case ActionType.SET_USER:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        currentUser: action.payload,
+      };
+
     default:
       return state;
   }
