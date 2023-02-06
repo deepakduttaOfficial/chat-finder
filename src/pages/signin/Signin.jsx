@@ -34,7 +34,10 @@ import {
 //  icons
 import { FcGoogle } from "react-icons/fc";
 import { BiShowAlt, BiHide } from "react-icons/bi";
-import { signinWithEmail } from "../../redux/action/authAction";
+import {
+  signinWithEmail,
+  signInWithGoogle,
+} from "../../redux/action/authAction";
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -56,22 +59,18 @@ const Signin = () => {
   // Hanlde sign in
   const handleSignin = (e) => {
     e.preventDefault();
-    dispatch(signinWithEmail(email, password));
     setValues({ email: "", password: "" });
+    dispatch(signinWithEmail(email, password));
   };
 
   // handle Google sing in
   const googleSignin = () => {
-    //
+    dispatch(signInWithGoogle());
   };
 
   const validator =
     !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) ||
     password.length < 6;
-
-  if (currentUser) {
-    return <Navigate to={"/chart"} />;
-  }
 
   useEffect(() => {
     if (error) {
@@ -84,6 +83,11 @@ const Signin = () => {
       });
     }
   }, [error]);
+
+  if (currentUser) {
+    return <Navigate to={"/chart"} />;
+  }
+
   return (
     <Container {...containerStyle}>
       <Heading {...headingStyle}>Message app</Heading>

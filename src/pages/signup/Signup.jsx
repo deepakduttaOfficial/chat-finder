@@ -3,12 +3,10 @@ import {
   Button,
   chakra,
   Container,
-  Divider,
   FormControl,
   FormHelperText,
   FormLabel,
   Heading,
-  HStack,
   IconButton,
   Input,
   InputGroup,
@@ -24,23 +22,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 //  icons
-import { FcGoogle } from "react-icons/fc";
 import { BiShowAlt, BiHide } from "react-icons/bi";
 
 // Import component style
 import {
   containerStyle,
-  dividerStyle,
   formContainerStyle,
   headingStyle,
   signupButtonStyle,
 } from "./style";
 
 // All action
-import {
-  registerUser,
-  registerUserWithGoogle,
-} from "../../redux/action/authAction";
+import { registerUser } from "../../redux/action/authAction";
 
 const Signup = () => {
   // Toast to show the error or success
@@ -75,11 +68,6 @@ const Signup = () => {
       email: "",
       password: "",
     });
-  };
-
-  // Google Signup
-  const googleSignup = () => {
-    dispatch(registerUserWithGoogle());
   };
 
   // handle The response to update the UI error/success
@@ -167,26 +155,6 @@ const Signup = () => {
             Signup
           </Button>
         </chakra.form>
-      </VStack>
-      <VStack {...formContainerStyle}>
-        <HStack justifyContent="start">
-          <Divider {...dividerStyle} />
-          <Text>Or</Text>
-          <Divider {...dividerStyle} />
-        </HStack>
-        <VStack w="full">
-          {/* Google */}
-          <Button
-            w={"full"}
-            variant={"outline"}
-            leftIcon={<FcGoogle />}
-            onClick={googleSignup}
-            isLoading={loading}
-            loadingText={"Loding..."}
-          >
-            Sign up with Google
-          </Button>
-        </VStack>
       </VStack>
     </Container>
   );

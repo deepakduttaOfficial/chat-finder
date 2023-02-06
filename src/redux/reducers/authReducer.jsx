@@ -13,12 +13,14 @@ export default (state = initialState, action) => {
     case ActionType.REGISTER_START:
     case ActionType.GOOGLE_SIGNUP_START:
     case ActionType.LOGIN_START:
+    case ActionType.GOOGLE_LOGIN_START:
       return { ...state, loading: true, error: null, success: false };
 
     case ActionType.REGISTER_SUCCESS:
     case ActionType.SET_USER:
     case ActionType.GOOGLE_SIGNUP_SUCCESS:
     case ActionType.LOGIN_SUCCESS:
+    case ActionType.GOOGLE_LOGIN_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -30,6 +32,7 @@ export default (state = initialState, action) => {
     case ActionType.REGISTER_FAIL:
     case ActionType.GOOGLE_SIGNUP_FAIL:
     case ActionType.LOGIN_FAIL:
+    case ActionType.GOOGLE_LOGIN_FAIL:
       return {
         ...state,
         loading: false,

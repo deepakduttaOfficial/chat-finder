@@ -43,16 +43,25 @@ export const setUser = (payload) => ({
 
 // Login start
 const loginStart = () => ({ type: ActionType.LOGIN_START });
+const googleLoginStart = () => ({ type: ActionType.GOOGLE_LOGIN_START });
 
 // Login fail
 const loginFail = (payload) => ({
   type: ActionType.LOGIN_FAIL,
   payload,
 });
+const googleLoginFail = (payload) => ({
+  type: ActionType.GOOGLE_LOGIN_FAIL,
+  payload,
+});
 
 // Login Success
 const loginSuccess = (payload) => ({
   type: ActionType.GOOGLE_SIGNUP_SUCCESS,
+  payload,
+});
+const googleLoginSuccess = (payload) => ({
+  type: ActionType.GOOGLE_LOGIN_SUCCESS,
   payload,
 });
 
@@ -81,24 +90,24 @@ export const registerUser =
   };
 
 // Google signup
-export const registerUserWithGoogle = () => (dispatch) => {
-  dispatch(googleSignupStart());
-  signInWithPopup(auth, provider)
-    .then(({ user }) => {
-      createUser(user)
-        .then(() => {
-          dispatch(googleSignupSuccess(user));
-        })
-        .catch((error) => {
-          dispatch(googleSignupFail(error.message));
-        });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
+// export const registerUserWithGoogle = () => (dispatch) => {
+//   dispatch(googleSignupStart());
+//   signInWithPopup(auth, provider)
+//     .then(({ user }) => {
+//       createUser(user)
+//         .then(() => {
+//           dispatch(googleSignupSuccess(user));
+//         })
+//         .catch((error) => {
+//           dispatch(googleSignupFail(error.message));
+//         });
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// };
 
-// Sigun in with email and password
+// SiguIN in with email and password
 export const signinWithEmail = (email, password) => (dispatch) => {
   dispatch(loginStart());
   signInWithEmailAndPassword(auth, email, password)
@@ -107,5 +116,24 @@ export const signinWithEmail = (email, password) => (dispatch) => {
     })
     .catch((error) => {
       dispatch(loginFail(error.message));
+    });
+};
+
+// SingIN with google
+
+export const signInWithGoogle = () => (dispatch) => {
+  dispatch(googleLoginStart());
+  signInWithPopup(auth, provider)
+    .then(({ user }) => {
+      createUser(user)
+        .then(() => {
+          dispatch(googleLoginSuccess(user));
+        })
+        .catch((error) => {
+          dispatch(googleSignupFail(error.message));
+        });
+    })
+    .catch((error) => {
+      dispatch(googleSignupFail(error.message));
     });
 };
