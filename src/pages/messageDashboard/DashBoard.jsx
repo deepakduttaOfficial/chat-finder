@@ -1,25 +1,37 @@
 import React from "react";
-import { getAuth, signOut } from "firebase/auth";
-import { useSelector } from "react-redux";
-import { Heading, Image } from "@chakra-ui/react";
+
+// React router dom
+import { useSearchParams } from "react-router-dom";
+// Chakra
+import {
+  Box,
+  Button,
+  chakra,
+  Input,
+  useColorModeValue,
+} from "@chakra-ui/react";
+// Custom wrapper
+import Wrapper from "../../components/navbar";
 
 const DashBoard = () => {
-  const auth = getAuth();
-  const signout = () => {
-    signOut(auth).then(() => {
-      console.log("Log out");
-    });
-  };
-  const { currentUser } = useSelector((state) => state.AUTH);
-
+  const [val, setVal] = useSearchParams();
+  const userId = val.get("userId");
+  console.log(val.get("userId"));
   return (
-    <div>
-      <button onClick={signout}>Sign out</button>
-
-      <Image src={currentUser.photoURL} />
-
-      <Heading>{currentUser.displayName}</Heading>
-    </div>
+    <Wrapper>
+      <Box>
+        {userId &&
+          Array(60)
+            .fill(" ")
+            .map((_, index) => {
+              return (
+                <Box key={index}>
+                  <chakra.a href={`#${index}`}>{userId}</chakra.a> <br />
+                </Box>
+              );
+            })}
+      </Box>
+    </Wrapper>
   );
 };
 
