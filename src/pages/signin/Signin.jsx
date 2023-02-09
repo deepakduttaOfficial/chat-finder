@@ -85,7 +85,7 @@ const Signin = () => {
   }, [error]);
 
   if (currentUser) {
-    return <Navigate to={"/chart"} />;
+    return <Navigate to={"/"} />;
   }
 
   return (

@@ -120,7 +120,6 @@ export const signinWithEmail = (email, password) => (dispatch) => {
 };
 
 // SingIN with google
-
 export const signInWithGoogle = () => (dispatch) => {
   dispatch(googleLoginStart());
   signInWithPopup(auth, provider)

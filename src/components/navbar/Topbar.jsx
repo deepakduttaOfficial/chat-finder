@@ -1,27 +1,26 @@
 import React from "react";
-import {
-  Flex,
-  HStack,
-  IconButton,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
-// Utils
-import { BRAND_NAME } from "../../utils/ConstName";
+import { Flex, HStack, IconButton, useColorModeValue } from "@chakra-ui/react";
 
 // icons
 import { BiMenu, BiBell } from "react-icons/bi";
 import Menubar from "./Menubar";
 // Custom style
-import { topbarBrandStyle, topbarContainer } from "./style";
+import { topbarContainer } from "./style";
+import { useSelector } from "react-redux";
+import UserCard from "./UserCard";
 
 const TopBar = ({ onOpen, ...rest }) => {
+  const { currentGroup } = useSelector((state) => state.MESSAGE);
   const TopbarBgColor = useColorModeValue("gray.100", "gray.900");
   const borderColor = useColorModeValue("gray.300", "gray.800");
   return (
     <Flex
       bg={TopbarBgColor}
       borderBottomColor={borderColor}
+      justifyContent={{
+        base: "space-between",
+        md: currentGroup ? "space-between" : "flex-end",
+      }}
       {...topbarContainer}
       {...rest}
     >
@@ -32,8 +31,17 @@ const TopBar = ({ onOpen, ...rest }) => {
         aria-label="open menu"
         icon={<BiMenu />}
       />
-      <Text {...topbarBrandStyle}>{BRAND_NAME}</Text>
-      <HStack spacing={{ base: "0", md: "6" }}>
+
+      {currentGroup && (
+        <UserCard
+          name={currentGroup[1]?.receiverInfo?.displayName}
+          email={currentGroup[1]?.receiverInfo?.email}
+          photoURL={currentGroup[1]?.receiverInfo?.photoURL}
+          ml="5"
+        />
+      )}
+
+      <HStack spacing={{ base: "0", md: "1" }}>
         <IconButton
           size="lg"
           variant="ghost"

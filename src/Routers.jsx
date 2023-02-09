@@ -13,20 +13,23 @@ import PrivateRoute from "./helpers/PrivateRoute";
 const Routers = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(setUser(user));
       } else {
         dispatch(setUser(null));
       }
     });
-  }, [dispatch]);
+    return () => {
+      unsub();
+    };
+  }, []);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route
-          path="/chart"
+          path="/"
           element={
             <PrivateRoute>
               <DashBoard />

@@ -90,7 +90,7 @@ const Signup = () => {
     password.length < 6;
 
   if (currentUser) {
-    return <Navigate to={"/chart"} />;
+    return <Navigate to={"/"} />;
   }
 
   return (

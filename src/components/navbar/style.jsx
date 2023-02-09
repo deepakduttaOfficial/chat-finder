@@ -29,7 +29,7 @@ export const topbarContainer = {
   height: "20",
   alignItems: "center",
   borderBottomWidth: "1px",
-  justifyContent: { base: "space-between", md: "flex-end" },
+  zIndex: "overlay",
 };
 
 export const topbarBrandStyle = {
