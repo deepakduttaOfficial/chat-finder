@@ -14,6 +14,7 @@ import {
   InputGroup,
   InputRightElement,
   Text,
+  useColorModeValue,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -38,6 +39,7 @@ import {
   signinWithEmail,
   signInWithGoogle,
 } from "../../redux/action/authAction";
+import Loading from "./Loading";
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -89,7 +91,11 @@ const Signin = () => {
   }
 
   return (
-    <Container {...containerStyle}>
+    <Container
+      {...containerStyle}
+      borderColor={useColorModeValue("gray.300", "whiteAlpha.400")}
+    >
+      <Loading loading={loading} />
       <Heading {...headingStyle}>Message app</Heading>
       <VStack {...formContainerStyle}>
         <chakra.form w="full" onSubmit={handleSignin}>
@@ -130,12 +136,7 @@ const Signin = () => {
             </FormControl>
           </VStack>
           {/* Sign up button */}
-          <Button
-            {...signupButtonStyle}
-            type="submit"
-            isLoading={loading}
-            isDisabled={validator}
-          >
+          <Button {...signupButtonStyle} type="submit" isDisabled={validator}>
             Signin
           </Button>
         </chakra.form>
@@ -153,8 +154,6 @@ const Signin = () => {
             variant={"outline"}
             leftIcon={<FcGoogle />}
             onClick={googleSignin}
-            isLoading={loading}
-            loadingText={"Loding..."}
           >
             Sign in with Google
           </Button>

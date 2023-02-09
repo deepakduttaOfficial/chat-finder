@@ -96,7 +96,7 @@ const FindStranger = () => {
         leftIcon={<IoMdAdd />}
         colorScheme="blue"
       >
-        Find Stranger
+        Add Contact
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

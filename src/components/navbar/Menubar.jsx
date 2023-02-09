@@ -8,6 +8,8 @@ import {
   MenuList,
   useColorModeValue,
   MenuDivider,
+  useColorMode,
+  Text,
 } from "@chakra-ui/react";
 
 // Custom style
@@ -15,6 +17,12 @@ import { menuButtonStyle } from "./style";
 import { auth } from "../../config/firebase";
 import { signOut } from "firebase/auth";
 import { useSelector } from "react-redux";
+
+// Icons
+import { FiSun, FiMoon } from "react-icons/fi";
+
+// if user image not then this image
+import current_user from "../../assets/current_user.png";
 
 const Menubar = ({ borderColor }) => {
   // Current user
@@ -29,27 +37,33 @@ const Menubar = ({ borderColor }) => {
         // An error happened.
       });
   };
+  // Change theme/mode
+  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <Menu>
       <MenuButton {...menuButtonStyle}>
         <HStack>
-          <Avatar
-            size={"sm"}
-            src={
-              currentUser?.photoURL ||
-              "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-            }
-          />
+          <Avatar size={"sm"} src={currentUser?.photoURL || current_user} />
         </HStack>
       </MenuButton>
       <MenuList
-        bg={useColorModeValue("white", "gray.900")}
+        bg={useColorModeValue("white", "gray.700")}
         borderColor={borderColor}
       >
         <MenuItem>{currentUser?.email}</MenuItem>
-        <MenuItem>Profile</MenuItem>
-        <MenuItem>Settings</MenuItem>
-        <MenuItem>Billing</MenuItem>
+        <MenuItem onClick={toggleColorMode}>
+          {colorMode === "light" ? (
+            <HStack>
+              <FiMoon />
+              <Text>Dark</Text>
+            </HStack>
+          ) : (
+            <HStack>
+              <FiSun />
+              <Text>Light</Text>
+            </HStack>
+          )}
+        </MenuItem>
         <MenuDivider />
         <MenuItem onClick={handleLogOut}>Sign out</MenuItem>
       </MenuList>

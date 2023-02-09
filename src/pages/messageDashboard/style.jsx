@@ -17,6 +17,5 @@ export const timeStyle = {
   pos: "absolute",
   right: "0",
   bottom: "1",
-  color: "gray.500",
   pr: "1",
 };

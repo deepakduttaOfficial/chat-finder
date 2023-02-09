@@ -14,7 +14,7 @@ import { sendMessage } from "../../redux/action/messageAction";
 import { IoMdSend } from "react-icons/io";
 
 const MessageSender = () => {
-  const bgColor = useColorModeValue("gray.100", "gray.800");
+  const bgColor = useColorModeValue("gray.100", "gray.900");
   const toast = useToast();
   const dispatch = useDispatch();
   const { currentGroup, error, success, loading } = useSelector(
@@ -28,12 +28,10 @@ const MessageSender = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(sendMessage({ currentGroup, currentUser, message }));
+    setMessage("");
   };
 
   useEffect(() => {
-    if (success) {
-      setMessage("");
-    }
     if (error) {
       toast({
         title: error,
@@ -43,7 +41,7 @@ const MessageSender = () => {
         duration: 9000,
       });
     }
-  }, [error, success]);
+  }, [error]);
 
   const validate = !currentGroup || message.length === 0;
 
@@ -58,7 +56,7 @@ const MessageSender = () => {
       <HStack py="8" px="5" bgColor={bgColor} w="full">
         <FormControl>
           <Input
-            borderColor={useColorModeValue("gray.400", "gray.200")}
+            borderColor={useColorModeValue("gray.400", "whiteAlpha.500")}
             onChange={(e) => setMessage(e.target.value)}
             value={message}
           />

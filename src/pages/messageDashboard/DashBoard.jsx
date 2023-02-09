@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 // Chakra
-import { Box, Flex, Progress, Text } from "@chakra-ui/react";
+import { Box, Flex, Progress, Text, useColorModeValue } from "@chakra-ui/react";
 // Custom wrapper
 import Wrapper from "../../components/navbar";
 // Redux
@@ -11,6 +11,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../config/firebase";
 // Custom style
 import { containerStyle, textContainerStyle, timeStyle } from "./style";
+import MessageCard from "./MessageCard";
 
 const DashBoard = () => {
   const messRef = useRef();
@@ -34,7 +35,7 @@ const DashBoard = () => {
       };
     };
     currentGroup && unsub();
-  }, [currentGroup && currentGroup[0]]);
+  }, [currentGroup]);
 
   // Scroll bottom
   useEffect(() => {
@@ -45,31 +46,15 @@ const DashBoard = () => {
     };
   }, [loadingData, loading]);
 
+  console.log(message);
+
   return (
     <Wrapper>
-      <Box ref={messRef} px="3">
+      <Box ref={messRef} px="5">
         {loadingData && <Progress size="xs" isIndeterminate />}
-        {message?.map((mess) => {
-          return (
-            <Flex
-              justifyContent={mess.senderId === currentUser.uid && "flex-end"}
-              key={mess.id}
-              {...containerStyle}
-            >
-              <Box
-                bgColor={
-                  mess.senderId === currentUser.uid ? "green.100" : "gray.300"
-                }
-                {...textContainerStyle}
-              >
-                <Text mr="12">{mess.message}</Text>
-                <Text aria-level="time" {...timeStyle}>
-                  2:21 am
-                </Text>
-              </Box>
-            </Flex>
-          );
-        })}
+        {message?.map((mess) => (
+          <MessageCard mess={mess} key={mess.id} currentUser={currentUser} />
+        ))}
       </Box>
     </Wrapper>
   );

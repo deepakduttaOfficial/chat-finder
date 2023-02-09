@@ -27,7 +27,7 @@ const ContactList = ({ contactList, onClose }) => {
           isHover={true}
         />
       )}
-      <Divider h="1px" bgColor={useColorModeValue("gray.300", "gray.200")} />
+      <Divider h="1px" bgColor={useColorModeValue("gray.300", "gray.700")} />
     </Box>
   );
 };

@@ -1,6 +1,5 @@
 export const containerStyle = {
   border: "1px",
-  borderColor: "gray.300",
   mt: "14",
   p: "5",
   maxW: "md",

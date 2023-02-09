@@ -1,6 +1,7 @@
 import React from "react";
 // Chakra ui
 import {
+  Avatar,
   HStack,
   Image,
   Text,
@@ -12,7 +13,7 @@ import {
 import { useSelector } from "react-redux";
 
 const UserCard = ({ name, email, groupId, photoURL, isHover, ...rest }) => {
-  const hoverColorItem = useColorModeValue("whiteAlpha.500", "black");
+  const hoverColorItem = useColorModeValue("whiteAlpha.800", "gray.800");
 
   // Get current group
   const { currentGroup } = useSelector((state) => state.MESSAGE);
@@ -30,13 +31,11 @@ const UserCard = ({ name, email, groupId, photoURL, isHover, ...rest }) => {
       zIndex={"overlay"}
       {...rest}
     >
-      <Image
-        src={photoURL || "https://bit.ly/dan-abramov"}
-        w="10"
-        rounded={"full"}
-      />
+      <Avatar size="md" name={name} src={photoURL} />
       <VStack alignItems="start" spacing="0">
-        <Text color={useColorModeValue("gray.500", "gray.600")}>{name}</Text>
+        <Text color={useColorModeValue("gray.500", "whiteAlpha.600")}>
+          {name}
+        </Text>
         <Text>{email}</Text>
       </VStack>
     </HStack>

@@ -13,7 +13,7 @@ import MessageSender from "../messageSender";
 const Wrapper = ({ children, ...rest }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box minH="100vh" bgColor={useColorModeValue("white", "black")}>
+    <Box minH="100vh" bgColor={useColorModeValue("white", "blackAlpha.300")}>
       <Sidebar
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
