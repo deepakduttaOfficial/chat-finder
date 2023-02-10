@@ -21,9 +21,10 @@ const ContactList = ({ contactList, onClose }) => {
       {contactList && (
         <UserCard
           name={receiverInfo.displayName}
-          email={receiverInfo.email}
+          lastMessage={contactList[1]?.lastMessage}
           groupId={contactList[0]}
           photoURL={receiverInfo.photoURL}
+          date={contactList[1].date}
           isHover={true}
         />
       )}

@@ -46,11 +46,9 @@ const DashBoard = () => {
     };
   }, [loadingData, loading]);
 
-  console.log(message);
-
   return (
     <Wrapper>
-      <Box ref={messRef} px="5">
+      <Box ref={messRef} px="5" pb="32">
         {loadingData && <Progress size="xs" isIndeterminate />}
         {message?.map((mess) => (
           <MessageCard mess={mess} key={mess.id} currentUser={currentUser} />

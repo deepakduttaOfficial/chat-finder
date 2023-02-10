@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Drawer,
@@ -9,9 +9,40 @@ import {
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
 import MessageSender from "../messageSender";
+// Contact list actions
+import {
+  getContactLoading,
+  setContactList,
+  successAddContact,
+} from "../../redux/action/contactAction";
+import { useDispatch, useSelector } from "react-redux";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../../config/firebase";
 
 const Wrapper = ({ children, ...rest }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  // dispatch
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.AUTH);
+  // Fetching user all Contact list
+  useEffect(() => {
+    dispatch(getContactLoading());
+    const getChats = () => {
+      const unsub = onSnapshot(
+        doc(db, "userCharts", currentUser.uid),
+        (doc) => {
+          // set it to the global state
+          dispatch(setContactList(doc.data()));
+          dispatch(successAddContact());
+        }
+      );
+      return () => {
+        unsub();
+      };
+    };
+    currentUser.uid && getChats();
+  }, [currentUser.uid]);
+
   return (
     <Box minH="100vh" bgColor={useColorModeValue("white", "blackAlpha.300")}>
       <Sidebar
@@ -34,7 +65,7 @@ const Wrapper = ({ children, ...rest }) => {
       {/* Top bar */}
       <TopBar onOpen={onOpen} pos="sticky" top="0" />
       {/* All message goes here */}
-      <Box ml={{ base: 0, md: "72" }} {...rest} mb="32">
+      <Box ml={{ base: 0, md: "72" }} {...rest}>
         {children}
       </Box>
       {/* Message sender input */}

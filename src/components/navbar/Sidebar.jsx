@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useMemo } from "react";
 import {
   Box,
   CloseButton,
@@ -11,18 +11,10 @@ import {
 // Custom style
 import { sidebarBrandContainer, sidebarContainerStyle } from "./style";
 
-import { useDispatch, useSelector } from "react-redux";
-import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "../../config/firebase";
+import { useSelector } from "react-redux";
 
 // Contact list container
 import ContactList from "./ContactList";
-// Contact list actions
-import {
-  getContactLoading,
-  setContactList,
-  successAddContact,
-} from "../../redux/action/contactAction";
 
 // Not contact found
 import not_found from "../../assets/not_found.svg";
@@ -32,30 +24,8 @@ const Sidebar = ({ onClose, ...rest }) => {
   // Colors theme
   const SidebarBgColor = useColorModeValue("gray.100", "gray.900");
   const borderColor = useColorModeValue("gray.300", "gray.800");
-  // dispatch
-  const dispatch = useDispatch();
   // Get all the state
   const { contactList, loading } = useSelector((state) => state.CONTACT_LIST);
-  const { currentUser } = useSelector((state) => state.AUTH);
-
-  // Fetching user all Contact list
-  useEffect(() => {
-    dispatch(getContactLoading());
-    const getChats = () => {
-      const unsub = onSnapshot(
-        doc(db, "userCharts", currentUser.uid),
-        (doc) => {
-          // set it to the global state
-          dispatch(setContactList(doc.data()));
-          dispatch(successAddContact());
-        }
-      );
-      return () => {
-        unsub();
-      };
-    };
-    currentUser.uid && getChats();
-  }, [currentUser.uid]);
 
   const isEmptyContactList = Object.entries(contactList).length === 0;
 
@@ -79,13 +49,15 @@ const Sidebar = ({ onClose, ...rest }) => {
         {loading && <Progress size="xs" isIndeterminate />}
         {isEmptyContactList && <Image src={not_found} mt="5" p="5" />}
         {contactList &&
-          Object.entries(contactList)?.map((contact) => (
-            <ContactList
-              contactList={contact}
-              key={contact[0]}
-              onClose={onClose}
-            />
-          ))}
+          Object.entries(contactList)
+            ?.sort((a, b) => b[1].date - a[1].date)
+            .map((contact) => (
+              <ContactList
+                contactList={contact}
+                key={contact[0]}
+                onClose={onClose}
+              />
+            ))}
       </Box>
     </Box>
   );

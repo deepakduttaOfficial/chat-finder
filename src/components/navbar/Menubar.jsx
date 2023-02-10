@@ -10,6 +10,7 @@ import {
   MenuDivider,
   useColorMode,
   Text,
+  Image,
 } from "@chakra-ui/react";
 
 // Custom style
@@ -43,7 +44,11 @@ const Menubar = ({ borderColor }) => {
     <Menu>
       <MenuButton {...menuButtonStyle}>
         <HStack>
-          <Avatar size={"sm"} src={currentUser?.photoURL || current_user} />
+          <Image
+            src={currentUser?.photoURL || current_user}
+            rounded="full"
+            w="40px"
+          />
         </HStack>
       </MenuButton>
       <MenuList

@@ -1,7 +1,7 @@
 // Side bar
 
 export const sidebarContainerStyle = {
-  transition: "3s ease",
+  transition: "0.5s ease",
   w: { base: "full", md: 72 },
   pos: "fixed",
   h: "full",

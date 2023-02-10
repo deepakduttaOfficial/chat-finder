@@ -1,8 +1,13 @@
-import { Box, Flex, Text, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
+import { Box, Flex, Text, useColorModeValue } from "@chakra-ui/react";
+//  Custom style
 import { containerStyle, textContainerStyle, timeStyle } from "./style";
+// import my npm package date time formatter
+import datetimeFormatter from "datetime-formatter-js";
 
 const MessageCard = ({ mess, currentUser }) => {
+  // console.log(new Date().toDateString());
+
   return (
     <Flex
       justifyContent={mess.senderId === currentUser.uid && "flex-end"}
@@ -23,7 +28,7 @@ const MessageCard = ({ mess, currentUser }) => {
           color={useColorModeValue("gray.500", "#ffffff99")}
           {...timeStyle}
         >
-          2:21 am
+          {datetimeFormatter.formatAMPM(new Date(mess.date.seconds * 1000))}
         </Text>
       </Box>
     </Flex>
