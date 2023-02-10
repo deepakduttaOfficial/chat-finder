@@ -56,6 +56,7 @@ const MessageSender = () => {
       <HStack py="8" px="5" bgColor={bgColor} w="full">
         <FormControl>
           <Input
+            type={"text"}
             borderColor={useColorModeValue("gray.400", "whiteAlpha.500")}
             _focus={{
               borderColor: useColorModeValue("gray.400", "whiteAlpha.500"),

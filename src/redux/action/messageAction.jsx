@@ -49,6 +49,6 @@ export const sendMessage =
       });
       dispatch(messageSendSuccess());
     } catch (error) {
-      dispatch(messageSendFail(error));
+      dispatch(messageSendFail(error.message));
     }
   };

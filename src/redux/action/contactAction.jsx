@@ -61,7 +61,7 @@ export const findUser =
       }
     } catch (error) {
       setUser({
-        error: error,
+        error: error.message,
         receiverInfo: null,
         loading: false,
       });
@@ -106,6 +106,6 @@ export const selectUser =
         dispatch(failAddContact("User already Exist"));
       }
     } catch (error) {
-      dispatch(failAddContact(error));
+      dispatch(failAddContact(error.message));
     }
   };
