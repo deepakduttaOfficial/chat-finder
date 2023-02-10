@@ -1,18 +1,13 @@
 export const containerStyle = {
   border: "1px",
   borderColor: "gray.300",
-  mt: "14",
+  my: { base: "6", md: "14" },
   p: "5",
   maxW: "md",
 };
 
-export const headingStyle = {
-  size: "lg",
-  fontWeight: "medium",
-  textAlign: "center",
-};
-
 export const formContainerStyle = {
+  mt: "10",
   my: "7",
   px: { base: "2", md: "8" },
   spacing: "3",
@@ -20,7 +15,7 @@ export const formContainerStyle = {
 
 export const signupButtonStyle = {
   w: "full",
-  colorScheme: "blue",
+  colorScheme: "green",
   mt: "5",
 };
 

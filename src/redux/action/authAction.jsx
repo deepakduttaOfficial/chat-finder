@@ -9,24 +9,46 @@ import {
 import { auth, provider } from "../../config/firebase";
 import { createUser } from "../../services/firebase";
 
-//Loading
+// Register user------------------------------------------>
+// Registration with Email and password**************
 const registerStart = () => ({ type: ActionType.REGISTER_START });
-const googleSignupStart = () => ({ type: ActionType.GOOGLE_SIGNUP_START });
 
-// Signed up successfully
 const registerSuccess = (payload) => ({
   type: ActionType.REGISTER_SUCCESS,
   payload,
 });
 
-const googleSignupSuccess = (payload) => ({
-  type: ActionType.GOOGLE_SIGNUP_SUCCESS,
+const registerFail = (payload) => ({
+  type: ActionType.REGISTER_FAIL,
   payload,
 });
 
-// signed up fail
-const registerFail = (payload) => ({
-  type: ActionType.REGISTER_FAIL,
+// Register logic
+export const registerUser =
+  ({ name, email, password }) =>
+  async (dispatch) => {
+    dispatch(registerStart());
+    try {
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      await updateProfile(auth.currentUser, {
+        displayName: name,
+      });
+      await createUser(user);
+      dispatch(registerSuccess(user));
+    } catch (error) {
+      dispatch(registerFail(error.message));
+    }
+  };
+
+// Registration with Google*******************
+const googleSignupStart = () => ({ type: ActionType.GOOGLE_SIGNUP_START });
+
+const googleSignupSuccess = (payload) => ({
+  type: ActionType.GOOGLE_SIGNUP_SUCCESS,
   payload,
 });
 
@@ -35,104 +57,69 @@ const googleSignupFail = (payload) => ({
   payload,
 });
 
-// Set user locali
-export const setUser = (payload) => ({
-  type: ActionType.SET_USER,
-  payload,
-});
+// Main logic
+export const registerUserWithGoogle = () => async (dispatch) => {
+  dispatch(googleSignupStart());
+  try {
+    const { user } = await signInWithPopup(auth, provider);
+    await createUser(user);
+    dispatch(googleSignupSuccess(user));
+  } catch (error) {
+    dispatch(googleSignupFail(error.message));
+  }
+};
 
-// Login start
+// Log in user------------------------------------------>
+// Log in with Email and password**************
 const loginStart = () => ({ type: ActionType.LOGIN_START });
-const googleLoginStart = () => ({ type: ActionType.GOOGLE_LOGIN_START });
 
-// Login fail
-const loginFail = (payload) => ({
-  type: ActionType.LOGIN_FAIL,
-  payload,
-});
-const googleLoginFail = (payload) => ({
-  type: ActionType.GOOGLE_LOGIN_FAIL,
-  payload,
-});
-
-// Login Success
 const loginSuccess = (payload) => ({
   type: ActionType.GOOGLE_SIGNUP_SUCCESS,
   payload,
 });
+
+const loginFail = (payload) => ({
+  type: ActionType.LOGIN_FAIL,
+  payload,
+});
+
+// Main logic
+export const signinWithEmail = (email, password) => async (dispatch) => {
+  dispatch(loginStart());
+  try {
+    const { user } = await signInWithEmailAndPassword(auth, email, password);
+    dispatch(loginSuccess(user));
+  } catch (error) {
+    dispatch(loginFail(error.message));
+  }
+};
+
+// Log in with Google**************
+const googleLoginStart = () => ({ type: ActionType.GOOGLE_LOGIN_START });
+
 const googleLoginSuccess = (payload) => ({
   type: ActionType.GOOGLE_LOGIN_SUCCESS,
   payload,
 });
 
-// Registration
-export const registerUser =
-  ({ name, email, password }) =>
-  (dispatch) => {
-    dispatch(registerStart());
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(async ({ user }) => {
-        await updateProfile(auth.currentUser, {
-          displayName: name,
-        });
-        createUser(user)
-          .then(() => {
-            dispatch(registerSuccess(user));
-          })
-          .catch((error) => {
-            dispatch(registerFail(error.message));
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-        dispatch(registerFail(error.message));
-      });
-  };
+const googleLoginFail = (payload) => ({
+  type: ActionType.GOOGLE_LOGIN_FAIL,
+  payload,
+});
 
-// Google signup
-// export const registerUserWithGoogle = () => (dispatch) => {
-//   dispatch(googleSignupStart());
-//   signInWithPopup(auth, provider)
-//     .then(({ user }) => {
-//       createUser(user)
-//         .then(() => {
-//           dispatch(googleSignupSuccess(user));
-//         })
-//         .catch((error) => {
-//           dispatch(googleSignupFail(error.message));
-//         });
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     });
-// };
-
-// SiguIN in with email and password
-export const signinWithEmail = (email, password) => (dispatch) => {
-  dispatch(loginStart());
-  signInWithEmailAndPassword(auth, email, password)
-    .then(({ user }) => {
-      dispatch(loginSuccess(user));
-    })
-    .catch((error) => {
-      dispatch(loginFail(error.message));
-    });
-};
-
-// SingIN with google
-export const signInWithGoogle = () => (dispatch) => {
+export const signInWithGoogle = () => async (dispatch) => {
   dispatch(googleLoginStart());
-  signInWithPopup(auth, provider)
-    .then(({ user }) => {
-      createUser(user)
-        .then(() => {
-          dispatch(googleLoginSuccess(user));
-        })
-        .catch((error) => {
-          dispatch(googleSignupFail(error.message));
-        });
-    })
-    .catch((error) => {
-      dispatch(googleSignupFail(error.message));
-    });
+  try {
+    const { user } = await signInWithPopup(auth, provider);
+    await createUser(user);
+    dispatch(googleLoginSuccess(user));
+  } catch (error) {
+    dispatch(googleLoginFail(error.message));
+  }
 };
+
+// Initial auth set up
+export const setUser = (payload) => ({
+  type: ActionType.SET_USER,
+  payload,
+});

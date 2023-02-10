@@ -2,7 +2,7 @@ import React from "react";
 import { Flex, HStack, IconButton, useColorModeValue } from "@chakra-ui/react";
 
 // icons
-import { BiMenu, BiBell } from "react-icons/bi";
+import { BiMenu } from "react-icons/bi";
 import Menubar from "./Menubar";
 // Custom style
 import { topbarContainer } from "./style";
@@ -42,12 +42,6 @@ const TopBar = ({ onOpen, ...rest }) => {
       )}
 
       <HStack spacing={{ base: "0", md: "1" }}>
-        <IconButton
-          size="lg"
-          variant="ghost"
-          aria-label="open menu"
-          icon={<BiBell />}
-        />
         <Flex alignItems={"center"}>
           <Menubar borderColor={borderColor} />
         </Flex>

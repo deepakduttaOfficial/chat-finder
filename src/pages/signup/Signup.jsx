@@ -3,15 +3,19 @@ import {
   Button,
   chakra,
   Container,
+  Divider,
   FormControl,
   FormHelperText,
   FormLabel,
-  Heading,
+  HStack,
   IconButton,
+  Image,
   Input,
   InputGroup,
   InputRightElement,
+  Link,
   Text,
+  useColorModeValue,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -19,21 +23,30 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 // React router dom
-import { Navigate } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
 
 //  icons
+import { FcGoogle } from "react-icons/fc";
 import { BiShowAlt, BiHide } from "react-icons/bi";
 
 // Import component style
 import {
   containerStyle,
+  dividerStyle,
   formContainerStyle,
-  headingStyle,
   signupButtonStyle,
 } from "./style";
 
 // All action
-import { registerUser } from "../../redux/action/authAction";
+import {
+  registerUser,
+  registerUserWithGoogle,
+} from "../../redux/action/authAction";
+
+// App logo
+import app_logo from "../../assets/app_logo.png";
+// Import Loading progress bar from signin component
+import Loading from "../signin/Loading";
 
 const Signup = () => {
   // Toast to show the error or success
@@ -70,6 +83,11 @@ const Signup = () => {
     });
   };
 
+  // Handle Signup using google
+  const googleSignup = () => {
+    dispatch(registerUserWithGoogle());
+  };
+
   // handle The response to update the UI error/success
   useEffect(() => {
     if (error) {
@@ -94,8 +112,14 @@ const Signup = () => {
   }
 
   return (
-    <Container {...containerStyle}>
-      <Heading {...headingStyle}>Message app</Heading>
+    <Container
+      {...containerStyle}
+      borderColor={useColorModeValue("gray.300", "whiteAlpha.400")}
+    >
+      <Loading loading={loading} />
+      <VStack>
+        <Image src={app_logo} w={{ base: "44", md: "52" }} />
+      </VStack>
       <VStack {...formContainerStyle}>
         <chakra.form w="full" onSubmit={handleSignup}>
           <VStack spacing="3">
@@ -106,6 +130,7 @@ const Signup = () => {
                 borderRadius="sm"
                 placeholder="Name"
                 type="text"
+                focusBorderColor="green.200"
                 value={name}
                 onChange={handleChange("name")}
               />
@@ -117,6 +142,7 @@ const Signup = () => {
                 borderRadius="sm"
                 placeholder="Email"
                 type="email"
+                focusBorderColor="green.200"
                 value={email}
                 onChange={handleChange("email")}
               />
@@ -138,6 +164,7 @@ const Signup = () => {
                   borderRadius="sm"
                   placeholder="Password"
                   type={isPassword ? "password" : "text"}
+                  focusBorderColor="green.200"
                   value={password}
                   onChange={handleChange("password")}
                 />
@@ -146,15 +173,42 @@ const Signup = () => {
             </FormControl>
           </VStack>
           {/* Sign up button */}
-          <Button
-            {...signupButtonStyle}
-            type="submit"
-            isLoading={loading}
-            isDisabled={validator}
-          >
+          <Button {...signupButtonStyle} type="submit" isDisabled={validator}>
             Signup
           </Button>
         </chakra.form>
+      </VStack>
+      <VStack {...formContainerStyle}>
+        <HStack justifyContent="start">
+          <Divider {...dividerStyle} />
+          <Text>Or</Text>
+          <Divider {...dividerStyle} />
+        </HStack>
+        <VStack w="full">
+          {/* Google */}
+          <Button
+            w={"full"}
+            variant={"outline"}
+            leftIcon={<FcGoogle />}
+            onClick={googleSignup}
+          >
+            Sign up with Google
+          </Button>
+        </VStack>
+      </VStack>
+      <VStack>
+        <Text align={"center"}>
+          Already have an account?{" "}
+          <Link
+            as={NavLink}
+            color={"blue.400"}
+            textTransform="uppercase"
+            to={"/e/signin"}
+            fontSize="sm"
+          >
+            Sign In
+          </Link>
+        </Text>
       </VStack>
     </Container>
   );

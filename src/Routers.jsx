@@ -23,7 +23,7 @@ const Routers = () => {
     return () => {
       unsub();
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <BrowserRouter>

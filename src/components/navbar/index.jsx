@@ -28,14 +28,11 @@ const Wrapper = ({ children, ...rest }) => {
   useEffect(() => {
     dispatch(getContactLoading());
     const getChats = () => {
-      const unsub = onSnapshot(
-        doc(db, "userCharts", currentUser.uid),
-        (doc) => {
-          // set it to the global state
-          dispatch(setContactList(doc.data()));
-          dispatch(successAddContact());
-        }
-      );
+      const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
+        // set it to the global state
+        dispatch(setContactList(doc.data()));
+        dispatch(successAddContact());
+      });
       return () => {
         unsub();
       };
@@ -45,10 +42,7 @@ const Wrapper = ({ children, ...rest }) => {
 
   return (
     <Box minH="100vh" bgColor={useColorModeValue("white", "blackAlpha.300")}>
-      <Sidebar
-        onClose={() => onClose}
-        display={{ base: "none", md: "block" }}
-      />
+      <Sidebar onClose={onClose} display={{ base: "none", md: "block" }} />
       <Drawer
         autoFocus={false}
         isOpen={isOpen}

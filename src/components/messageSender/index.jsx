@@ -57,6 +57,10 @@ const MessageSender = () => {
         <FormControl>
           <Input
             borderColor={useColorModeValue("gray.400", "whiteAlpha.500")}
+            _focus={{
+              borderColor: useColorModeValue("gray.400", "whiteAlpha.500"),
+              ring: "none",
+            }}
             onChange={(e) => setMessage(e.target.value)}
             value={message}
           />

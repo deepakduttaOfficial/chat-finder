@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 // Chakra
-import { Box, Flex, Progress, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Progress } from "@chakra-ui/react";
 // Custom wrapper
 import Wrapper from "../../components/navbar";
 // Redux
@@ -26,7 +26,7 @@ const DashBoard = () => {
   useEffect(() => {
     const unsub = () => {
       setLoadingData(true);
-      onSnapshot(doc(db, "chats", currentGroup[0]), (doc) => {
+      onSnapshot(doc(db, "chats", currentGroup?.[0]), (doc) => {
         setMessage(doc.data().message);
         setLoadingData(false);
       });

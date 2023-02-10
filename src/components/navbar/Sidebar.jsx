@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import {
   Box,
   CloseButton,
@@ -16,9 +16,11 @@ import { useSelector } from "react-redux";
 // Contact list container
 import ContactList from "./ContactList";
 
-// Not contact found
+// Not contact found Images
 import not_found from "../../assets/not_found.svg";
 import FindStranger from "./FindStranger";
+// Logo
+import app_logo from "../../assets/app_logo.png";
 
 const Sidebar = ({ onClose, ...rest }) => {
   // Colors theme
@@ -27,7 +29,8 @@ const Sidebar = ({ onClose, ...rest }) => {
   // Get all the state
   const { contactList, loading } = useSelector((state) => state.CONTACT_LIST);
 
-  const isEmptyContactList = Object.entries(contactList).length === 0;
+  const isEmptyContactList =
+    contactList && Object.keys(contactList)?.length === 0;
 
   return (
     <Box
@@ -37,7 +40,7 @@ const Sidebar = ({ onClose, ...rest }) => {
       {...rest}
     >
       <Flex {...sidebarBrandContainer} borderBottomColor={borderColor}>
-        <FindStranger />
+        <Image src={app_logo} w="24" ml="10" />
         <CloseButton
           display={{ base: "flex", md: "none" }}
           onClick={onClose}
@@ -48,6 +51,9 @@ const Sidebar = ({ onClose, ...rest }) => {
       <Box overflow={"scroll"} h="full">
         {loading && <Progress size="xs" isIndeterminate />}
         {isEmptyContactList && <Image src={not_found} mt="5" p="5" />}
+        <Box p="2">
+          <FindStranger />
+        </Box>
         {contactList &&
           Object.entries(contactList)
             ?.sort((a, b) => b[1].date - a[1].date)

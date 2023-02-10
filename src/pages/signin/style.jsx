@@ -1,6 +1,6 @@
 export const containerStyle = {
   border: "1px",
-  mt: "14",
+  my: { base: "6", md: "14" },
   p: "5",
   maxW: "md",
 };
@@ -12,14 +12,15 @@ export const headingStyle = {
 };
 
 export const formContainerStyle = {
-  my: "7",
+  mt: "10",
+  mb: "7",
   px: { base: "2", md: "8" },
   spacing: "3",
 };
 
 export const signupButtonStyle = {
   w: "full",
-  colorScheme: "blue",
+  colorScheme: "green",
   mt: "5",
 };
 

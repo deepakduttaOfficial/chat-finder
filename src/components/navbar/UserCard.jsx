@@ -47,7 +47,12 @@ const UserCard = ({
       <Avatar size="md" name={name} src={photoURL} />
       <VStack alignItems={"flex-start"} spacing="0" w="full">
         <HStack justifyContent="space-between" w="full">
-          <Text fontWeight="medium">{name}</Text>
+          <Text
+            fontWeight="medium"
+            fontSize={{ base: email && "sm", md: email && "md" }}
+          >
+            {name}
+          </Text>
           {lastMessage && (
             <Text
               color={useColorModeValue("gray.500", "#ffffff99")}
@@ -67,7 +72,14 @@ const UserCard = ({
               {lastMessage}
             </Text>
           )}
-          {email && <Text color={textColor}>{email}</Text>}
+          {email && (
+            <Text
+              color={textColor}
+              fontSize={{ base: email && "xs", md: email && "md" }}
+            >
+              {email}
+            </Text>
+          )}
         </Box>
       </VStack>
     </HStack>

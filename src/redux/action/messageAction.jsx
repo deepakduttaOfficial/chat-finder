@@ -38,12 +38,12 @@ export const sendMessage =
         }),
       });
       // Updatet the current user lastmessage
-      await updateDoc(doc(db, "userCharts", currentUser.uid), {
+      await updateDoc(doc(db, "userChats", currentUser.uid), {
         [currentGroup[0] + ".lastMessage"]: message,
         [currentGroup[0] + ".date"]: serverTimestamp(),
       });
       // Updatet the reciver lastmessage
-      await updateDoc(doc(db, "userCharts", currentGroup[1].receiverInfo.uid), {
+      await updateDoc(doc(db, "userChats", currentGroup[1].receiverInfo.uid), {
         [currentGroup[0] + ".lastMessage"]: message,
         [currentGroup[0] + ".date"]: serverTimestamp(),
       });

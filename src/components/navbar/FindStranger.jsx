@@ -29,7 +29,7 @@ import not_found from "../../assets/not_found.svg";
 import search from "../../assets/search.svg";
 
 // Icons
-import { IoMdAdd } from "react-icons/io";
+import { BiSearch } from "react-icons/bi";
 
 const FindStranger = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -88,16 +88,21 @@ const FindStranger = () => {
 
   return (
     <>
-      <Button
+      <Input
+        as={Button}
+        display={"flex"}
+        justifyContent="start"
+        color={useColorModeValue("blackAlpha.700", "whiteAlpha.600")}
+        fontWeight={"normal"}
+        borderColor={useColorModeValue("blackAlpha.400", "whiteAlpha.400")}
         onClick={() => {
           onOpen();
           setUser({ error: null, receiverInfo: null, loading: false });
         }}
-        leftIcon={<IoMdAdd />}
-        colorScheme="blue"
+        leftIcon={<BiSearch />}
       >
-        Add Contact
-      </Button>
+        Search Contact
+      </Input>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

@@ -78,7 +78,7 @@ export const selectUser =
         // Create a chats
         dispatch(getContactLoading());
         await setDoc(doc(db, "chats", combinedId), { message: [] });
-        await updateDoc(doc(db, "userCharts", currentUser.uid), {
+        await updateDoc(doc(db, "userChats", currentUser.uid), {
           [combinedId + ".receiverInfo"]: {
             uid: receiverInfo?.uid,
             displayName: receiverInfo?.displayName,
@@ -87,7 +87,7 @@ export const selectUser =
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
-        await updateDoc(doc(db, "userCharts", receiverInfo.uid), {
+        await updateDoc(doc(db, "userChats", receiverInfo.uid), {
           [combinedId + ".receiverInfo"]: {
             uid: currentUser?.uid,
             displayName: currentUser?.displayName,

@@ -1,14 +1,16 @@
 import React from "react";
 import { Box, Divider, useColorModeValue } from "@chakra-ui/react";
 import UserCard from "./UserCard";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrentGroup } from "../../redux/action/messageAction";
 
 const ContactList = ({ contactList, onClose }) => {
   const dispatch = useDispatch();
+  const { currentGroup } = useSelector((state) => state.MESSAGE);
 
   // Set current group
   const handleClick = () => {
+    if (currentGroup?.[0] == contactList[0]) return;
     dispatch(setCurrentGroup(contactList));
     onClose();
   };

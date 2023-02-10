@@ -7,18 +7,21 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
-  Heading,
   HStack,
   IconButton,
+  Image,
   Input,
   InputGroup,
   InputRightElement,
+  Link,
   Text,
   useColorModeValue,
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import { Navigate } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
+// App logo
+import app_logo from "../../assets/app_logo.png";
 
 // React-readux
 import { useDispatch, useSelector } from "react-redux";
@@ -28,7 +31,6 @@ import {
   containerStyle,
   dividerStyle,
   formContainerStyle,
-  headingStyle,
   signupButtonStyle,
 } from "./style";
 
@@ -96,7 +98,9 @@ const Signin = () => {
       borderColor={useColorModeValue("gray.300", "whiteAlpha.400")}
     >
       <Loading loading={loading} />
-      <Heading {...headingStyle}>Message app</Heading>
+      <VStack>
+        <Image src={app_logo} w={{ base: "44", md: "52" }} />
+      </VStack>
       <VStack {...formContainerStyle}>
         <chakra.form w="full" onSubmit={handleSignin}>
           <VStack spacing="3">
@@ -108,6 +112,7 @@ const Signin = () => {
                 placeholder="Email"
                 type="email"
                 value={email}
+                focusBorderColor="green.200"
                 onChange={handleChange("email")}
               />
             </FormControl>
@@ -130,6 +135,7 @@ const Signin = () => {
                   type={isPassword ? "password" : "text"}
                   value={password}
                   onChange={handleChange("password")}
+                  focusBorderColor="green.200"
                 />
               </InputGroup>
               <FormHelperText>Password must be 6 charecter long</FormHelperText>
@@ -158,6 +164,20 @@ const Signin = () => {
             Sign in with Google
           </Button>
         </VStack>
+      </VStack>
+      <VStack>
+        <Text align={"center"}>
+          Don't have an account?{" "}
+          <Link
+            as={NavLink}
+            color={"blue.400"}
+            textTransform="uppercase"
+            to={"/e/signup"}
+            fontSize="sm"
+          >
+            Sign up
+          </Link>
+        </Text>
       </VStack>
     </Container>
   );
