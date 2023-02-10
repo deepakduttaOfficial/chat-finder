@@ -7,7 +7,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import Sidebar from "./Sidebar";
-import TopBar from "./TopBar";
+import TopbarContainer from "./TopbarContainer.jsx";
 import MessageSender from "../messageSender";
 // Contact list actions
 import {
@@ -57,7 +57,7 @@ const Wrapper = ({ children, ...rest }) => {
         </DrawerContent>
       </Drawer>
       {/* Top bar */}
-      <TopBar onOpen={onOpen} pos="sticky" top="0" />
+      <TopbarContainer onOpen={onOpen} pos="sticky" top="0" />
       {/* All message goes here */}
       <Box ml={{ base: 0, md: "72" }} {...rest}>
         {children}

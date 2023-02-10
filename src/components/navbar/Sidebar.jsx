@@ -50,10 +50,10 @@ const Sidebar = ({ onClose, ...rest }) => {
       </Flex>
       <Box overflow={"scroll"} h="full">
         {loading && <Progress size="xs" isIndeterminate />}
-        {isEmptyContactList && <Image src={not_found} mt="5" p="5" />}
         <Box p="2">
           <FindStranger />
         </Box>
+        {isEmptyContactList && <Image src={not_found} mt="5" p="5" />}
         {contactList &&
           Object.entries(contactList)
             ?.sort((a, b) => b[1].date - a[1].date)

@@ -9,7 +9,7 @@ import { topbarContainer } from "./style";
 import { useSelector } from "react-redux";
 import UserCard from "./UserCard";
 
-const TopBar = ({ onOpen, ...rest }) => {
+const TopbarContainer = ({ onOpen, ...rest }) => {
   const { currentGroup } = useSelector((state) => state.MESSAGE);
   const TopbarBgColor = useColorModeValue("gray.100", "gray.900");
   const borderColor = useColorModeValue("gray.300", "gray.800");
@@ -50,4 +50,4 @@ const TopBar = ({ onOpen, ...rest }) => {
   );
 };
 
-export default TopBar;
+export default TopbarContainer;
