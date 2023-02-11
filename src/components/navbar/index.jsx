@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Drawer,
@@ -16,22 +16,23 @@ import {
   successAddContact,
 } from "../../redux/action/contactAction";
 import { useDispatch, useSelector } from "react-redux";
-import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "../../config/firebase";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { auth, db } from "../../config/firebase";
 
 const Wrapper = ({ children, ...rest }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  //
+  const [contact, setContact] = useState();
+
   // dispatch
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.AUTH);
   // Fetching user all Contact list
   useEffect(() => {
     dispatch(getContactLoading());
-    const getChats = () => {
+    const getChats = async () => {
       const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
-        // set it to the global state
-        dispatch(setContactList(doc.data()));
-        dispatch(successAddContact());
+        setContact(doc.data());
       });
       return () => {
         unsub();
@@ -39,6 +40,31 @@ const Wrapper = ({ children, ...rest }) => {
     };
     currentUser.uid && getChats();
   }, [currentUser.uid]);
+
+  useEffect(() => {
+    const unsub = async () => {
+      let obj = {};
+      for (const key in contact) {
+        const docSnap = await getDoc(
+          doc(db, "users", contact[key].receiverInfo.uid)
+        );
+        obj = {
+          ...obj,
+          [key]: {
+            date: contact[key].date,
+            lastMessage: contact[key]?.lastMessage,
+            receiverInfo: docSnap.data(),
+          },
+        };
+      }
+      dispatch(setContactList(obj));
+      dispatch(successAddContact());
+    };
+    contact && unsub();
+    return () => {
+      unsub();
+    };
+  }, [contact]);
 
   return (
     <Box minH="100vh" bgColor={useColorModeValue("white", "blackAlpha.300")}>

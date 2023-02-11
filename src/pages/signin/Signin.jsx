@@ -41,7 +41,8 @@ import {
   signinWithEmail,
   signInWithGoogle,
 } from "../../redux/action/authAction";
-import Loading from "./Loading";
+
+import SpinnerLoading from "../../components/animation/SpinnerLoading";
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -97,7 +98,7 @@ const Signin = () => {
       {...containerStyle}
       borderColor={useColorModeValue("gray.300", "whiteAlpha.400")}
     >
-      <Loading loading={loading} />
+      <SpinnerLoading loading={loading} />
       <VStack>
         <Image src={app_logo} w={{ base: "44", md: "52" }} />
       </VStack>

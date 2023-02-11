@@ -35,7 +35,7 @@ const UserCard = ({
     <HStack
       align="center"
       p="4"
-      bgColor={currentGroup && groupId === currentGroup[0] && hoverColorItem}
+      bgColor={groupId === currentGroup?.[0] && hoverColorItem}
       borderRadius="lg"
       role="group"
       _hover={{

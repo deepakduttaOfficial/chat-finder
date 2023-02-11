@@ -45,8 +45,8 @@ import {
 
 // App logo
 import app_logo from "../../assets/app_logo.png";
-// Import Loading progress bar from signin component
-import Loading from "../signin/Loading";
+// Import Loading progress bar
+import SpinnerLoading from "../../components/animation/SpinnerLoading";
 
 const Signup = () => {
   // Toast to show the error or success
@@ -116,7 +116,7 @@ const Signup = () => {
       {...containerStyle}
       borderColor={useColorModeValue("gray.300", "whiteAlpha.400")}
     >
-      <Loading loading={loading} />
+      <SpinnerLoading loading={loading} />
       <VStack>
         <Image src={app_logo} w={{ base: "44", md: "52" }} />
       </VStack>

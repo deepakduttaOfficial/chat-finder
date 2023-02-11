@@ -3,12 +3,11 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  Button,
   useDisclosure,
   Spinner,
 } from "@chakra-ui/react";
 
-const Loading = ({ loading }) => {
+const SpinnerLoading = ({ loading }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useEffect(() => {
     if (loading) {
@@ -29,4 +28,4 @@ const Loading = ({ loading }) => {
   );
 };
 
-export default Loading;
+export default SpinnerLoading;

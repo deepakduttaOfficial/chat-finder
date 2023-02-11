@@ -25,7 +25,7 @@ const ContactList = ({ contactList, onClose }) => {
           name={receiverInfo.displayName}
           lastMessage={contactList[1]?.lastMessage}
           groupId={contactList[0]}
-          photoURL={receiverInfo.photoURL}
+          photoURL={receiverInfo.photo}
           date={contactList[1].date}
           isHover={true}
         />

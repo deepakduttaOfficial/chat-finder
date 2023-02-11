@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Avatar,
   HStack,
   Menu,
   MenuButton,
@@ -24,6 +23,7 @@ import { FiSun, FiMoon } from "react-icons/fi";
 
 // if user image not then this image
 import current_user from "../../assets/current_user.png";
+import { NavLink } from "react-router-dom";
 
 const Menubar = ({ borderColor }) => {
   // Current user
@@ -68,6 +68,9 @@ const Menubar = ({ borderColor }) => {
               <Text>Light</Text>
             </HStack>
           )}
+        </MenuItem>
+        <MenuItem as={NavLink} to={"/account/profile"}>
+          Profile
         </MenuItem>
         <MenuDivider />
         <MenuItem onClick={handleLogOut}>Sign out</MenuItem>

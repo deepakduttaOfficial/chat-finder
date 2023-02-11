@@ -9,6 +9,7 @@ import Signup from "./pages/signup/Signup";
 import { setUser } from "./redux/action/authAction";
 import { auth } from "./config/firebase";
 import PrivateRoute from "./helpers/PrivateRoute";
+import Profile from "./pages/profile";
 
 const Routers = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,14 @@ const Routers = () => {
           element={
             <PrivateRoute>
               <DashBoard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/account/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
             </PrivateRoute>
           }
         />
