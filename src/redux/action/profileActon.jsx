@@ -27,14 +27,19 @@ export const uploadImage = (file, currentUser) => async (dispatch) => {
     dispatch(imageUploadStart());
     // First delete the previous image
     if (currentUser.photoURL) {
-      const deleteRef = ref(storage, currentUser.photoURL);
-      getDownloadURL(deleteRef)
-        .then(async () => {
-          await deleteObject(deleteRef);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      try {
+        const deleteRef = ref(storage, currentUser.photoURL);
+        console.log(deleteRef);
+        getDownloadURL(deleteRef)
+          .then(async () => {
+            await deleteObject(deleteRef);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } catch (error) {
+        console.log(error);
+      }
     }
     // Upload image
     const storageRef = ref(

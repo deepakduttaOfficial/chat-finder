@@ -36,7 +36,7 @@ const TopbarContainer = ({ onOpen, ...rest }) => {
         <UserCard
           name={currentGroup[1]?.receiverInfo?.displayName}
           email={currentGroup[1]?.receiverInfo?.email}
-          photoURL={currentGroup[1]?.receiverInfo?.photoURL}
+          photoURL={currentGroup[1]?.receiverInfo?.photo}
           ml="5"
         />
       )}

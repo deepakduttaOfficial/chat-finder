@@ -22,11 +22,11 @@ const ContactList = ({ contactList, onClose }) => {
     <Box as={"button"} w="full" onClick={handleClick}>
       {contactList && (
         <UserCard
-          name={receiverInfo.displayName}
+          name={receiverInfo?.displayName}
           lastMessage={contactList[1]?.lastMessage}
           groupId={contactList[0]}
-          photoURL={receiverInfo.photo}
-          date={contactList[1].date}
+          photoURL={receiverInfo?.photo}
+          date={contactList[1]?.date}
           isHover={true}
         />
       )}

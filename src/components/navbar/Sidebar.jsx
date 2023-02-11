@@ -11,7 +11,7 @@ import {
 // Custom style
 import { sidebarBrandContainer, sidebarContainerStyle } from "./style";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // Contact list container
 import ContactList from "./ContactList";
@@ -21,11 +21,13 @@ import not_found from "../../assets/not_found.svg";
 import FindStranger from "./FindStranger";
 // Logo
 import app_logo from "../../assets/app_logo.png";
+import { setCurrentGroup } from "../../redux/action/messageAction";
 
 const Sidebar = ({ onClose, ...rest }) => {
   // Colors theme
   const SidebarBgColor = useColorModeValue("gray.100", "gray.900");
   const borderColor = useColorModeValue("gray.300", "gray.800");
+  const dispatch = useDispatch();
   // Get all the state
   const { contactList, loading } = useSelector((state) => state.CONTACT_LIST);
 
@@ -40,7 +42,15 @@ const Sidebar = ({ onClose, ...rest }) => {
       {...rest}
     >
       <Flex {...sidebarBrandContainer} borderBottomColor={borderColor}>
-        <Image src={app_logo} w="24" ml="10" />
+        <Image
+          src={app_logo}
+          w="24"
+          ml="10"
+          cursor="pointer"
+          onClick={() => {
+            dispatch(setCurrentGroup(null));
+          }}
+        />
         <CloseButton
           display={{ base: "flex", md: "none" }}
           onClick={onClose}

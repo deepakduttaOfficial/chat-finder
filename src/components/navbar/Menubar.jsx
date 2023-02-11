@@ -10,6 +10,7 @@ import {
   useColorMode,
   Text,
   Image,
+  Avatar,
 } from "@chakra-ui/react";
 
 // Custom style
@@ -20,6 +21,7 @@ import { useSelector } from "react-redux";
 
 // Icons
 import { FiSun, FiMoon } from "react-icons/fi";
+import { CgProfile } from "react-icons/cg";
 
 // if user image not then this image
 import current_user from "../../assets/current_user.png";
@@ -44,10 +46,10 @@ const Menubar = ({ borderColor }) => {
     <Menu>
       <MenuButton {...menuButtonStyle}>
         <HStack>
-          <Image
+          <Avatar
+            size="md"
+            name={currentUser?.name}
             src={currentUser?.photoURL || current_user}
-            rounded="full"
-            w="40px"
           />
         </HStack>
       </MenuButton>
@@ -55,7 +57,12 @@ const Menubar = ({ borderColor }) => {
         bg={useColorModeValue("white", "gray.700")}
         borderColor={borderColor}
       >
-        <MenuItem>{currentUser?.email}</MenuItem>
+        <MenuItem as={NavLink} to={"/account/profile"}>
+          <HStack>
+            <CgProfile />
+            <Text>Profile</Text>
+          </HStack>
+        </MenuItem>
         <MenuItem onClick={toggleColorMode}>
           {colorMode === "light" ? (
             <HStack>
@@ -69,9 +76,7 @@ const Menubar = ({ borderColor }) => {
             </HStack>
           )}
         </MenuItem>
-        <MenuItem as={NavLink} to={"/account/profile"}>
-          Profile
-        </MenuItem>
+
         <MenuDivider />
         <MenuItem onClick={handleLogOut}>Sign out</MenuItem>
       </MenuList>
