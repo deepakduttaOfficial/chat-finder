@@ -69,7 +69,9 @@ const UserCard = ({
         <Box textAlign={"start"}>
           {lastMessage && (
             <Text color={textColor} noOfLines={1}>
-              {lastMessage}
+              {lastMessage?.length > 22
+                ? lastMessage.substring(0, 22) + "..."
+                : lastMessage}
             </Text>
           )}
           {email && (
