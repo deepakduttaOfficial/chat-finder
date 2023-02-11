@@ -65,9 +65,12 @@ const DashBoard = () => {
       <Box ref={messRef} px="5" pb="32">
         {loadingData && <Progress size="xs" isIndeterminate />}
         {message.length === 0 && !currentGroup && (
-          <VStack px="5" maxW="450px" mx="auto" mt={10}>
+          <VStack px="5" maxW="450px" mx="auto" mt={{ base: "20", md: "10" }}>
             <Image src={app_logo} />
             <FindStranger />
+            <Text color={useColorModeValue("blackAlpha.500", "whiteAlpha.500")}>
+              test_search: deepakdutta752@gmail.com
+            </Text>
 
             <Text
               color={useColorModeValue("blackAlpha.500", "whiteAlpha.500")}
