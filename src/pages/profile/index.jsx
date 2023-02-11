@@ -103,7 +103,7 @@ const Profile = () => {
               placeholder="your-email@example.com"
               _placeholder={{ color: "gray.500" }}
               type="email"
-              defaultValue="deepakdutta752@gmail.com"
+              defaultValue={currentUser.email}
             />
           </FormControl>
 
