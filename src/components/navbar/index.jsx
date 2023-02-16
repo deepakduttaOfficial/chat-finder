@@ -42,6 +42,7 @@ const Wrapper = ({ children, ...rest }) => {
   }, [currentUser.uid]);
 
   useEffect(() => {
+    dispatch(getContactLoading());
     const unsub = async () => {
       let obj = {};
       for (const key in contact) {
